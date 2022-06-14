@@ -11,9 +11,18 @@ object MyApp {
   def main (arg: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("MyApp")
     val sc = new SparkContext(conf)
-    sc.setLogLevel("ERROR")
-    val em = new EventManager(sc.appName, sc.applicationId)
+    var em: EventManager = null
+    val HTTP_endpoint = System.getProperty("HTTP_endpoint")
+    if(HTTP_endpoint ==null)
+    {
+      em = new EventManager(sc.appName, sc.applicationId)
+    }
+    else
+    {
+      em = new EventManager( sc.appName, sc.applicationId, HTTP_endpoint)
+    }
     sc.addSparkListener(em)
+    sc.setLogLevel("ERROR")
 
     val spark: SparkSession = SparkSession.builder()
       .master("local[1]")
@@ -37,13 +46,6 @@ object MyApp {
       city,
       person("city") <=> city("city")
     ).show()
-
-
-//    val response: HttpResponse[String] = Http("https://fake-server-app.herokuapp.com/users").asString
-//    println(s"${response.body}")
-
-
-
 
   }
 }

@@ -6,7 +6,7 @@ import scalaj.http._
 
 class EventManager (val appName: String ,
                     val appID: String ,
-                    val HTTP_endpoint : String = "predefined_HTTP_endpoint") extends SparkListener {
+                    val HTTP_endpoint : String = "https://fake-server-app.herokuapp.com/users") extends SparkListener {
 
 
 
@@ -84,7 +84,7 @@ class EventManager (val appName: String ,
       s"\n                          HTTP end point name: ${HTTP_endpoint} " +
       s"\n-------------------------------------------------------------------------------------------------------------\n\n\n")
 
-    val result = Http("https://fake-server-app.herokuapp.com/users").postForm(Seq("application_ID" -> appID, "application_Name" -> appName)).asString
+    val result = Http(HTTP_endpoint).postForm(Seq("application_ID" -> appID, "application_Name" -> appName)).asString
 
   }
 }
