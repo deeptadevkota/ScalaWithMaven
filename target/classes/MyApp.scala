@@ -1,10 +1,11 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
-import sttp.client3._
+import scalaj.http._
 
 
 object MyApp {
+  // mvn assembly:single
   def main (arg: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("MyApp")
     val sc = new SparkContext(conf)
@@ -38,8 +39,10 @@ object MyApp {
 
     // the `query` parameter is automatically url-encoded
     // `sort` is removed, as the value is not defined
-    val request = basicRequest.get(uri"https://api.github.com/search/repositories?q=$query&sort=$sort")
+    val response: HttpResponse[String] = Http("http://www.google.com").asString
+    println(s"${response.body}")
 
-    println("application ended")
+
+    println("application ended - scalaj")
   }
 }
