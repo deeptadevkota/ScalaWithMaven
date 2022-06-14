@@ -38,15 +38,14 @@ object MyApp {
       person("city") <=> city("city")
     ).show()
 
-    val sort: Option[String] = None
-    val query = "http language:scala"
 
-    // the `query` parameter is automatically url-encoded
-    // `sort` is removed, as the value is not defined
-    val response: HttpResponse[String] = Http("http://www.google.com").asString
-    println(s"${response.headers}")
+    val response: HttpResponse[String] = Http("https://fake-server-app.herokuapp.com/users").asString
+    println(s"${response.body}")
 
+//    val result = Http("https://fake-server-app.herokuapp.com/users")
+//      .postData(s"""{"latitude":$lat,"longitude":$long,"radius":"0"}""")
+//      .asString
 
-    println("application ended - scalaj")
+    println("application ended - json database - scalaj")
   }
 }
