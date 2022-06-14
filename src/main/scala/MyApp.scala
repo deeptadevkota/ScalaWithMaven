@@ -5,6 +5,7 @@ import scalaj.http._
 
 
 object MyApp {
+  // $SPARK_HOME/bin/spark-submit --class MyApp --master local SparkSimpleApp-1.0-SNAPSHOT-jar-with-dependencies.jar
   // mvn assembly:single
   def main (arg: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("MyApp")
@@ -40,7 +41,7 @@ object MyApp {
     // the `query` parameter is automatically url-encoded
     // `sort` is removed, as the value is not defined
     val response: HttpResponse[String] = Http("http://www.google.com").asString
-    println(s"${response.body}")
+    println(s"${response.headers}")
 
 
     println("application ended - scalaj")
