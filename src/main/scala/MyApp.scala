@@ -1,6 +1,7 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
+import sttp.client3._
 
 object MyApp {
   def main (arg: Array[String]): Unit = {
@@ -30,5 +31,13 @@ object MyApp {
         city,
         person("city") <=> city("city")
       ).show()
+
+    val sort: Option[String] = None
+    val query = "http language:scala"
+
+    // the `query` parameter is automatically url-encoded
+    // `sort` is removed, as the value is not defined
+    val request = basicRequest.get(uri"https://api.github.com/search/repositories?q=$query&sort=$sort")
+
     }
 }
