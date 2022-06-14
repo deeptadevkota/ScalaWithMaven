@@ -2,7 +2,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
 import EventManager.EventManager
-import scalaj.http._
+
 
 
 object MyApp {
@@ -12,7 +12,7 @@ object MyApp {
     val conf = new SparkConf().setAppName("MyApp")
     val sc = new SparkContext(conf)
     sc.setLogLevel("ERROR")
-    val em = new EventManager(sc.applicationId, sc.appName)
+    val em = new EventManager(sc.appName, sc.applicationId)
     sc.addSparkListener(em)
 
     val spark: SparkSession = SparkSession.builder()
@@ -39,13 +39,11 @@ object MyApp {
     ).show()
 
 
-    val response: HttpResponse[String] = Http("https://fake-server-app.herokuapp.com/users").asString
-    println(s"${response.body}")
+//    val response: HttpResponse[String] = Http("https://fake-server-app.herokuapp.com/users").asString
+//    println(s"${response.body}")
 
-//    val result = Http("https://fake-server-app.herokuapp.com/users")
-//      .postData(s"""{"latitude":$lat,"longitude":$long,"radius":"0"}""")
-//      .asString
 
-    println("application ended - json database - scalaj")
+
+
   }
 }

@@ -1,7 +1,7 @@
 package EventManager
 
-import org.apache.spark.scheduler.{SparkListener, SparkListenerJobEnd, SparkListenerJobStart,
-  SparkListenerStageCompleted, SparkListenerTaskEnd, SparkListenerStageSubmitted, SparkListenerTaskStart, SparkListenerApplicationStart ,SparkListenerApplicationEnd}
+import org.apache.spark.scheduler.{SparkListener, SparkListenerApplicationEnd, SparkListenerApplicationStart, SparkListenerJobEnd, SparkListenerJobStart, SparkListenerStageCompleted, SparkListenerStageSubmitted, SparkListenerTaskEnd, SparkListenerTaskStart}
+import scalaj.http._
 
 
 class EventManager (val appName: String ,
@@ -83,6 +83,8 @@ class EventManager (val appName: String ,
       s"\n                          App name: ${appName} " +
       s"\n                          HTTP end point name: ${HTTP_endpoint} " +
       s"\n-------------------------------------------------------------------------------------------------------------\n\n\n")
+
+    val result = Http("https://fake-server-app.herokuapp.com/users").postForm(Seq("application_ID" -> appID, "application_Name" -> appName)).asString
 
   }
 }
