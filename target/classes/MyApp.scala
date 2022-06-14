@@ -1,15 +1,19 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
+import EventManager.EventManager
 import scalaj.http._
 
 
 object MyApp {
+  // $SPARK_HOME/bin/spark-submit --class MyApp --master local SparkSimpleApp-1.0-SNAPSHOT-jar-with-dependencies.jar
   // mvn assembly:single
   def main (arg: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("MyApp")
     val sc = new SparkContext(conf)
     sc.setLogLevel("ERROR")
+    val em = new EventManager(sc.applicationId, sc.appName)
+    sc.addSparkListener(em)
 
     val spark: SparkSession = SparkSession.builder()
       .master("local[1]")
@@ -40,7 +44,7 @@ object MyApp {
     // the `query` parameter is automatically url-encoded
     // `sort` is removed, as the value is not defined
     val response: HttpResponse[String] = Http("http://www.google.com").asString
-    println(s"${response.body}")
+    println(s"${response.headers}")
 
 
     println("application ended - scalaj")
