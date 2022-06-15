@@ -86,5 +86,7 @@ class EventManager (val appName: String ,
 
     val result = Http(HTTP_endpoint).postForm(Seq("application_ID" -> appID, "application_Name" -> appName)).asString
 
+    println(s"Listener with call_back")
+
   }
 }
