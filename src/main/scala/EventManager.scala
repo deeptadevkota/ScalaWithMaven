@@ -6,7 +6,7 @@ import scalaj.http._
 
 class EventManager (val appName: String ,
                     val appID: String ,
-                    val HTTP_endpoint : String = "https://endpoint-server-deepta.herokuapp.com/call-backs") extends SparkListener {
+                    val HTTP_endpoint : String = "http://deeptadevkota-001-site1.ctempurl.com/WeatherForecast") extends SparkListener {
 
 
 
@@ -84,9 +84,13 @@ class EventManager (val appName: String ,
       s"\n                          HTTP end point name: ${HTTP_endpoint} " +
       s"\n-------------------------------------------------------------------------------------------------------------\n\n\n")
 
-    val result = Http(HTTP_endpoint).postForm(Seq("application_ID" -> appID, "application_Name" -> appName)).asString
 
-    println(s"Spark Application with call_back API implemented")
+
+    val result = Http(HTTP_endpoint).postForm(Seq("AppID" -> appID, "AppName" -> appName)).asString
+
+    println(result.headers)
+
+    println(s"Spark Application with call_back API implemented - III")
 
   }
 }
